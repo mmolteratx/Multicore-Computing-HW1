@@ -27,6 +27,12 @@ public class Frequency implements Callable {
 
     public static int parallelFreq(int x, int[] A, int numThreads) {
 
+        if(A.length < numThreads) {return -1;}
+        else if(A.length == 1) {
+            if(A[0] == x) {return 1;}
+            else {return 0;}
+        }
+
         int chunkSize = A.length / numThreads;
         int i = 0;
         int j = chunkSize;
@@ -34,12 +40,10 @@ public class Frequency implements Callable {
 
         ExecutorService threadPool = Executors.newCachedThreadPool();
 
-
         for(int k = 0; k < numThreads; k++) {
             try {
                 Future<Integer> freq1 = threadPool.submit(new Frequency(Arrays.copyOfRange(A, i, j), x));
                 freq += freq1.get();
-                System.out.println("thread");
                 i += chunkSize;
                 j += chunkSize;
 
