@@ -1,6 +1,7 @@
 \documentclass{article}
 
 \usepackage[english]{babel}
+\usepackage{lineno, blindtext}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath,amssymb}
 \usepackage{parskip}
@@ -31,7 +32,7 @@
     \texttt{ozm59}
     \and
     Molter, Matthew\\
-    \texttt{EID}}
+    \texttt{mm58286}}
 \date{\today}
 
 \begin{document}
@@ -73,8 +74,34 @@ Show that any of the following modifications to Peterson’s algorithm makes it 
 
 
 \subsection{Solution 2a}
+Take the following possible order of executions.
+
+\begin{linenumbers}
+	wantCS[0] = true;
+	
+	wantCS[1] = true;
+	
+	turn = 0; // $P_0$ enters CS since $P_1$ does not yet want to enter the CS.
+	
+	turn = 1; // $P_1$ enters CS. $P_0$ is already in the CS, but it is not $P_0$'s turn.
+\end{linenumbers}
+
+It can be seen that it is possible for both processes can enter the critical section at the same time. This violates mutual exclusion.
 
 \subsection{Solution 2b}
+Take the following possible order of executions.
+
+\begin{linenumbers}
+	turn = 1;
+	
+	turn = 0;
+	
+	wantCS[1] = true; // $P_1$ enters CS. It is $P_0$'s turn, but it does not want the CS.
+	
+	wantsCS[0] = true; // $P_0$ enters CS. $P_1$ is already in the CS, but it is not $P_1$'s turn.
+\end{linenumbers}
+
+It can be seen that it is possible for both processes can enter the critical section at the same time. This violates mutual exclusion.
 
 
 %%%%%%%%%%%%%%%%%
@@ -92,6 +119,35 @@ The $l-exclusion$ problem is a variant of the starvation-free mutual exclusion p
 Modify the $n$-process $Filter$ mutual exclusion algorithm to turn it into an $l-exclusion$ algorithm.
 
 \subsection{Solution 3}
+Original algorithm:
+
+\begin{lstlisting}
+defn:
+int N; // number of processes
+int[] gate; // for thread i, gate[i] stores gate thread i is trying to enter; init 0s
+int[] last; // for gate k, last[k] stores last thread id trying to enter; init 0s
+
+requestCS(int i):
+	for(int k = 1; k < N; k++) {
+		gate[i] = k;
+		last[k] = i;
+		for(int j = 0; j < N; j++) {
+			while((j != i) && // there is some other process
+				(gate[j] >= k) && // that is ahead or at the same level
+				(last[k] == i)) // and I am the last to update last[k]
+			{}; // busy wait
+		}
+	}
+	
+releaseCS(int i):
+	gate[i] = 0;
+
+
+
+\end{lstlisting}
+
+
+
 
 
 %%%%%%%%%%%%%%%%%
