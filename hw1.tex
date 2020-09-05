@@ -58,7 +58,69 @@
 
 \subsection{Solution 1a}
 
+Initial State of switch is $off$.
+
+The algorithm the prisoners should use is as follows:
+\begin{itemize}[label={}]
+\item Designate one prisoner to keep track of total count (lets make this prisoner $0$).
+\item All the prisoners will also keep track of their own $count$ variable.
+
+\item For all normal prisoners (prisoners $1$ though $N-1$):
+	\begin{itemize}[label={}]
+	\item When a prisoner enters the switch room:
+		\begin{itemize}[label={}]
+		\item if they have already flipped the switch ($count == 1$), they will immediately leave regardless of switch position.
+		\item if they have not already flipped the switch ($count == 0$):
+			\begin{itemize} [label={}]
+			\item If the switch is set to $off$ they will flip it to $on$, set $count = 1$, and leave.
+			\item If the switch is set to $on$ they will leave.
+			\end{itemize}
+		\end{itemize}
+	\end{itemize}
+\item For all the counter (prisoner $0$):
+	\begin{itemize}[label={}]
+	\item When counter enters the switch room:
+		\begin{itemize}[label={}]
+		\item If the switch is set to $on$ they will flip it to $off$, do $count++$, and leave.
+		\item If the switch is set to $off$ they will leave.
+		\end{itemize}
+	\item If $count == N-1$, they will declare that every prisoner has been in the switch room at least once.
+	\end{itemize}
+\end{itemize}
+This works since every prisoner will set the switch to $on$ only once and there is a prisoner keeping track of the total counts of the switch being set to $on$. 
+
 \subsection{Solution 1b}
+
+Initial state of switch could be $on$ or $off$.
+
+The algorithm the prisoners should use is as follows:
+\begin{itemize}[label={}]
+\item Designate one prisoner to keep track of total count (lets make this prisoner 0).
+\item All the prisoners will also keep track of their own $count$ variable.
+
+\item For all normal prisoners (prisoner $1$ though $N-1$):
+	\begin{itemize}[label={}]
+	\item When a prisoner enters the switch room:
+		\begin{itemize}[label={}]
+		\item If they have already flipped the switch twice ($count == 2$), they will immediately leave regardless of switch position.
+		\item If they have not already flipped the switch twice ($count < 2$): 
+			\begin{itemize}[label={}]
+			\item if the switch is set to $off$ they will flip it to $on$, do $count++$, and leave.
+			\item if the switch is set to $on$ they will leave.
+			\end{itemize}
+		\end{itemize}
+	\end{itemize}
+\item For all the counter (prisoner $0$):
+	\begin{itemize}[label={}]
+	\item When counter enters the switch room:
+		\begin{itemize}[label={}]
+		\item If the switch is set to $on$ they will flip it to $off$, do $count++$, and leave.
+		\item If the switch is set to $off$ they will leave.
+		\end{itemize}
+	\item If $count == 2(N-1)$, they will declare that every prisoner has been in the switch room at least once.	
+	\end{itemize}
+\end{itemize}
+This works since at most every prisoner will set the switch to $on$ twice and every prisoner will set the switch at least once (in the case that the switch is initialized to $on$ one prisoner will have only set the switch once).   
 
 %%%%%%%%%%%%%%%%%
 %   Problem 2   %
