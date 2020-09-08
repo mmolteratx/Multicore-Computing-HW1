@@ -1,6 +1,8 @@
 package Problem4;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.*;
 
 public class Frequency implements Callable {
@@ -16,7 +18,7 @@ public class Frequency implements Callable {
     public Integer call() {
         Integer count = 0;
 
-        for(int num: array) {
+        for(int num : array) {
             if(this.key == num) {
                 count++;
             }
@@ -27,8 +29,7 @@ public class Frequency implements Callable {
 
     public static int parallelFreq(int x, int[] A, int numThreads) {
 
-        if(A.length < numThreads) {return -1;}
-        else if(A.length == 1) {
+        if(A.length == 1) {
             if(A[0] == x) {return 1;}
             else {return 0;}
         }
@@ -38,15 +39,20 @@ public class Frequency implements Callable {
         int j = chunkSize;
         int freq = 0;
 
-        ExecutorService threadPool = Executors.newCachedThreadPool();
+        List<Future<Integer>> resultList = new ArrayList<>();
+
+        ExecutorService threadPool = Executors.newFixedThreadPool(numThreads);
 
         for(int k = 0; k < numThreads; k++) {
-            try {
-                Future<Integer> freq1 = threadPool.submit(new Frequency(Arrays.copyOfRange(A, i, j), x));
-                freq += freq1.get();
-                i += chunkSize;
-                j += chunkSize;
+            Future<Integer> freqResult = threadPool.submit(new Frequency(Arrays.copyOfRange(A, i, j), x));
+            resultList.add(freqResult);
+            i += chunkSize;
+            j += chunkSize;
+        }
 
+        for(Future<Integer> future : resultList) {
+            try {
+                freq += future.get();
             } catch (Exception e) {
                 System.err.println(e);
             }
@@ -56,6 +62,7 @@ public class Frequency implements Callable {
         return freq;
     }
 
+    /*
     public static void main(String[] args) {
 
         int[] array = new int[]{13, 14, 11, 2, 3, 19, 14, 14};
@@ -64,4 +71,5 @@ public class Frequency implements Callable {
         int freq = parallelFreq(key, array, 4);
         System.out.println("Frequency of " + key + ": " + freq);
     }
+    */
 }
