@@ -1,4 +1,4 @@
-package Problem5.Tournament;
+package q6.Tournament;
 
 public interface Lock {
     public void lock(int pid);
