@@ -58,6 +58,7 @@ public class Frequency implements Callable {
                 freq += future.get();
             } catch (Exception e) {
                 System.err.println(e);
+                return -1;
             }
         }
 
