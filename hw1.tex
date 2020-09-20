@@ -8,6 +8,7 @@
 \usepackage{enumitem}
 \usepackage{listings}
 \usepackage{graphicx}
+\graphicspath{ {./images/} }
 \usepackage[ruled,vlined]{algorithm2e}
 %\usepackage{algorithmic}
 %\usepackage{algpseudocode}
@@ -260,13 +261,34 @@ Submit the plot as part of the assignment.
 Remember to use $volatile$ qualifier for shared variables to guarantee
 atomicity for part (a).
 
-\subsection{Plots 5a}
+\subsection{Single Thread Plot}
+\includegraphics[width=12cm]{1_thread}
 
-\subsection{Plots 5b}
+\subsection{Two Threads Plot}
+\includegraphics[width=12cm]{2_threads}
 
-\subsection{Plots 5c}
+\subsection{Three Threads Plot}
+\includegraphics[width=12cm]{3_threads}
 
-\subsection{Plots 5d}
+\subsection{Four Threads Plot}
+\includegraphics[width=12cm]{4_threads}
 
+\subsection{Five Threads Plot}
+\includegraphics[width=12cm]{5_threads}
+
+\subsection{Six Threads Plot}
+\includegraphics[width=12cm]{6_threads}
+
+\subsection{Seven Threads Plot}
+\includegraphics[width=12cm]{7_threads}
+
+\subsection{Eight Threads Plot}
+\includegraphics[width=12cm]{8_threads}
+
+\subsection{Note on Tournament Implementation}
+Since it is impossible to make an array of $volatile$ data types (the $volatile$ ends up becoming attached to the array pointer instead), arrays of AtomicBooleans were used for the $want$ and $turn$ arrays. The only way to allocate arrays of $volatile$ booleans would be to implement a JAVA class encapsulating a single $volatile$ boolean which would be a simple version of AtomicBoolean.
+
+\subsection{Data Trends}
+Tournament, to no huge surprise, performs the worst of the four methods. Its performance increases most dramatically when a level is added to the tournament (between thread counts: 2 to 3, and 4 to 5). Atomic performs best at lower thread counts (1 though 3) and lock performs best on the higher number of threads (5 though 8). What is surprising is that as threads increase sync, lock, and atomic jump up in time period and then the time decreases until the next jump up. Perhaps, like in Tournament, the implementation has to do significantly more work/allocate more resources at certain intervals.  
 
 \end{document}
