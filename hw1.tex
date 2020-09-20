@@ -182,23 +182,34 @@ The $l-exclusion$ problem is a variant of the starvation-free mutual exclusion p
 Modify the $n$-process $Filter$ mutual exclusion algorithm to turn it into an $l-exclusion$ algorithm.
 
 \subsection{Solution 3}
-Original algorithm:
+Solving for $l-exclusion$ requires that we add an integer variable for $l$, and each process must ensure that less than $l$ processes are in the critical section, or ahead of it in the wait for the critical section before entering. This is done by checking all processes for gates they are trying to enter, and each process attempting to access a gate higher than the current thread is ahead of it in line. If after the check, fewer than $l$ processes are in the CS or ahead in line, the current process enters the CS.
+
+Modified algorithm:
 
 \begin{lstlisting}
 defn:
 int N; // number of processes
+int L; // number of processes allowed to access CS simultaneously
 int[] gate; // for thread i, gate[i] stores gate thread i is trying to enter; init 0s
 int[] last; // for gate k, last[k] stores last thread id trying to enter; init 0s
 
 requestCS(int i):
-	for(int k = 1; k < N; k++) {
+	for(int k = 1; k < N - L + 1; k++) {
 		gate[i] = k;
 		last[k] = i;
-		for(int j = 0; j < N; j++) {
-			while((j != i) && // there is some other process
-				(gate[j] >= k) && // that is ahead or at the same level
-				(last[k] == i)) // and I am the last to update last[k]
-			{}; // busy wait
+		
+		for(int j = 0; j < N - l; j++) {
+			int ahead = L + 1;
+			
+			while(ahead > 1 && last[k] == i) {
+				ahead = 0;
+				
+				for (int m = 0; m < N; m++) {
+					if(gate[m] >= k) {
+						above++;
+					}
+				}
+			}
 		}
 	}
 	
@@ -208,7 +219,6 @@ releaseCS(int i):
 
 
 \end{lstlisting}
-
 
 
 
