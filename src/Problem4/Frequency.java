@@ -28,8 +28,11 @@ public class Frequency implements Callable {
     }
 
     public static int parallelFreq(int x, int[] A, int numThreads) {
-
-        if(A.length == 1) {
+        
+        if(A == null || A.length == 0){
+            return 0;
+        }
+        else if(A.length == 1) {
             if(A[0] == x) {return 1;}
             else {return 0;}
         }
