@@ -1,6 +1,6 @@
 package Tests;
 
-import Problem5.*;
+import q6.*;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
