@@ -1,6 +1,6 @@
 package Tests;
 
-import Problem4.Frequency;
+import q5.Frequency;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
