@@ -198,20 +198,19 @@ requestCS(int i):
 		gate[i] = k;
 		last[k] = i;
 		
-		for(int j = 0; j < N - l; j++) {
-			int ahead = L + 1;
+		int ahead = L + 1;
 			
-			while(ahead > 1 && last[k] == i) {
-				ahead = 0;
+		while(ahead > 1 && last[k] == i) {
+			ahead = 0;
 				
-				for (int m = 0; m < N; m++) {
-					if(gate[m] >= k) {
-						ahead++;
-					}
+			for(int j = 0; j < N; j++) {
+				if(gate[j] >= k) {
+					ahead++;
 				}
 			}
 		}
 	}
+
 	
 releaseCS(int i):
 	gate[i] = 0;
