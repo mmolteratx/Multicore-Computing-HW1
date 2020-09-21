@@ -199,18 +199,21 @@ requestCS(int i):
 		last[k] = i;
 		int ahead = L+1;
 
-		//while I am not at the head of the wait line and I am the last person to enter this gate/waiting room
-		while(ahead > 1 && last[k] == i) {
+		//while I am not at the head of the wait line and I am the last person 
+		//to enter this gate/waiting room
+		while(ahead > L && last[k] == i) {
 			ahead = 0;
 				
-			//look at all the processes and if they are ahead of me in line, update the ahead counter
+			//look at all the processes and if they are ahead of me in line, 
+			//update the ahead counter
 			for (int m = 0; m < N; m++) {
 				if(gate[m] >= k) {
 					ahead++;
 				}//end if
 			}//end for
 		}//end while
-		 //no one is ahead of me (spot open in the critical section) or someone has joined the line and thus there is one less thread ahead of me.
+		 //no one is ahead of me (spot open in the critical section) or someone 
+		 //has joined the line and thus there is one less thread ahead of me.
 		 //either way, time to update my position in line
 	}//end for
 	
