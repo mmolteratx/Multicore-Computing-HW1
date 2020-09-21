@@ -64,7 +64,7 @@ Initial State of switch is $off$.
 The algorithm the prisoners should use is as follows:
 \begin{itemize}[label={}]
 \item Designate one prisoner to keep track of total count (lets make this prisoner $0$).
-\item All the prisoners will also keep track of their own $count$ variable.
+\item All the prisoners will also keep track of their own $count$ variable (which starts at $count=0$).
 
 \item For all normal prisoners (prisoners $1$ though $N-1$):
 	\begin{itemize}[label={}]
@@ -97,7 +97,7 @@ Initial state of switch could be $on$ or $off$.
 The algorithm the prisoners should use is as follows:
 \begin{itemize}[label={}]
 \item Designate one prisoner to keep track of total count (lets make this prisoner 0).
-\item All the prisoners will also keep track of their own $count$ variable.
+\item All the prisoners will also keep track of their own $count$ variable (which starts at $count=0$).
 
 \item For all normal prisoners (prisoner $1$ though $N-1$):
 	\begin{itemize}[label={}]
@@ -271,29 +271,8 @@ Submit the plot as part of the assignment.
 Remember to use $volatile$ qualifier for shared variables to guarantee
 atomicity for part (a).
 
-\subsection{Single Thread Plot}
-\includegraphics[width=12cm]{1_thread}
-
-\subsection{Two Threads Plot}
-\includegraphics[width=12cm]{2_threads}
-
-\subsection{Three Threads Plot}
-\includegraphics[width=12cm]{3_threads}
-
-\subsection{Four Threads Plot}
-\includegraphics[width=12cm]{4_threads}
-
-\subsection{Five Threads Plot}
-\includegraphics[width=12cm]{5_threads}
-
-\subsection{Six Threads Plot}
-\includegraphics[width=12cm]{6_threads}
-
-\subsection{Seven Threads Plot}
-\includegraphics[width=12cm]{7_threads}
-
-\subsection{Eight Threads Plot}
-\includegraphics[width=12cm]{8_threads}
+\subsection{Plot of average of 100 run times of each method over number of threads}
+\includegraphics[width=12cm]{aggregate}
 
 \subsection{Note on Tournament Implementation}
 Since it is impossible to make an array of $volatile$ data types (the $volatile$ ends up becoming attached to the array pointer instead), arrays of AtomicBooleans were used for the $want$ and $turn$ arrays. The only way to allocate arrays of $volatile$ booleans would be to implement a JAVA class encapsulating a single $volatile$ boolean which would be a simple version of AtomicBoolean.
