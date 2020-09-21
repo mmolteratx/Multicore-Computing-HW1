@@ -212,9 +212,9 @@ requestCS(int i):
 				}//end if
 			}//end for
 		}//end while
-		 //no one is ahead of me (spot open in the critical section) or someone 
-		 //has joined the line and thus there is one less thread ahead of me.
-		 //either way, time to update my position in line
+		 //less than L processes are in the CS and ahead in line, or another
+		 //process has tried to enter the same gate
+		 //either way, move to the next gate
 	}//end for
 	
 releaseCS(int i):
