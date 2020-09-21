@@ -28,16 +28,23 @@ public class Frequency implements Callable {
     }
 
     public static int parallelFreq(int x, int[] A, int numThreads) {
-        
+
         if(A == null || A.length == 0){
             return 0;
         }
-        else if(A.length == 1) {
+
+        if(A.length == 1) {
             if(A[0] == x) {return 1;}
             else {return 0;}
         }
 
-        int chunkSize = A.length / numThreads;
+        int chunkSize = 0;
+
+        if(numThreads > A.length)
+            chunkSize = 1;
+        else
+            chunkSize = A.length / numThreads;
+
         int i = 0;
         int j = chunkSize;
         int freq = 0;
@@ -49,8 +56,13 @@ public class Frequency implements Callable {
         for(int k = 0; k < numThreads; k++) {
             Future<Integer> freqResult = threadPool.submit(new Frequency(Arrays.copyOfRange(A, i, j), x));
             resultList.add(freqResult);
+
             i += chunkSize;
             j += chunkSize;
+
+            if((k == (numThreads - 2)) && (A.length % numThreads != 0)) {
+                j = A.length;
+            }
         }
 
         for(Future<Integer> future : resultList) {
@@ -66,14 +78,14 @@ public class Frequency implements Callable {
         return freq;
     }
 
-    /*
-    public static void main(String[] args) {
 
-        int[] array = new int[]{13, 14, 11, 2, 3, 19, 14, 14};
+   /* public static void main(String[] args) {
+
+        int[] array = new int[]{13, 14, 11, 2, 3, 19, 14};
         int key = 14;
 
-        int freq = parallelFreq(key, array, 4);
+        int freq = parallelFreq(key, array, 8);
         System.out.println("Frequency of " + key + ": " + freq);
-    }
-    */
+    }*/
+
 }
